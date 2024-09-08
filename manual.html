@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTA San Andreas Stories Manual</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Bank+Gothic&display=swap');
+
+    body {
+        font-family: 'Bank Gothic', sans-serif;
+        background-color: #000;
+        color: #fff;
+        margin: 0;
+        padding: 20px;
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url('grunge_texture.jpg'); /* Optional grunge texture */
+        background-size: cover;
+        overflow: hidden; /* Hide scrollbars */
+    }
+
+    header {
+        background-color: #000;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        border-bottom: 3px solid #888; /* Gray accent */
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    h1 {
+        font-family: 'Bank Gothic', sans-serif; /* GTA style font */
+        font-size: 2.5em;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin: 0;
+        color: #fff;
+    }
+
+    .manual-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 1000px;
+        position: relative;
+    }
+
+    .img-section img {
+        width: 100%;
+        max-width: 1000px;
+        height: auto;
+        border: 5px solid #888; /* Gray borders for images */
+        box-shadow: 0px 0px 15px rgba(136, 136, 136, 0.6); /* Gray glow around images */
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .img-section img.zoomed {
+        transform: scale(2); /* Zoom in scale factor */
+        cursor: zoom-out;
+    }
+
+    .arrow {
+        position: absolute;
+        top: 50%;
+        font-size: 3em;
+        color: #888;
+        cursor: pointer;
+        transform: translateY(-50%);
+        z-index: 10;
+        font-family: 'Bank Gothic', sans-serif;
+        text-shadow: 0 0 5px #888; /* Gray glow for arrows */
+        transition: opacity 0.3s ease;
+    }
+
+    #left-arrow {
+        left: 20px;
+    }
+
+    #right-arrow {
+        right: 20px;
+    }
+
+    .hidden {
+        opacity: 0;
+        pointer-events: none; /* Prevent interaction when hidden */
+    }
+
+    .credits-section {
+        padding: 20px;
+        text-align: center;
+        background-color: #111;
+        border: 3px solid #888; /* Gray accent for credits */
+        box-shadow: 0px 0px 10px rgba(136, 136, 136, 0.6);
+        margin-top: 40px;
+    }
+
+    .credits-section h2 {
+        font-family: 'Bank Gothic', sans-serif;
+        font-size: 2em;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        color: #888; /* Gray title text for credits */
+    }
+
+    .credits-section ul {
+        list-style: none;
+        padding: 0;
+        font-size: 1.2em;
+    }
+
+    .credits-section li {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    footer {
+        text-align: center;
+        font-family: 'Bank Gothic', sans-serif;
+        padding: 20px;
+        border-top: 2px solid #888;
+        margin-top: 40px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        color: #888;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>GTA San Andreas Stories Manual</h1>
+</header>
+
+<!-- Custom Arrows for navigation -->
+<div id="left-arrow" class="arrow" onclick="prevPage()">&#9664;</div>
+<div id="right-arrow" class="arrow" onclick="nextPage()">&#9654;</div>
+
+<div class="manual-section">
+    <div class="img-section" id="content">
+        <!-- Content will be dynamically loaded here -->
+    </div>
+</div>
+
+<script>
+    const pages = [
+        `<img src="path_to_your_image1.jpg" alt="Manual Cover">`,
+        `<img src="path_to_your_image2.jpg" alt="Manual Page 2">`,
+        `<img src="path_to_your_image3.jpg" alt="Manual Page 3">`,
+        `<img src="path_to_your_image4.jpg" alt="Manual Page 4">`,
+        `<img src="path_to_your_image5.jpg" alt="Manual Page 5">`,
+        `<div class="credits-section">
+            <h2>Credits</h2>
+            <ul>
+                <li><strong>FrankoU</strong> - Visual designer & style enhancement</li>
+                <li><strong>babamohammed2022</strong> - Visual designer, writer, visual assistant, website</li>
+                <li><strong>Abdullah</strong> - Writer, website & content contributor</li>
+                <li><strong>Cerdquad</strong> - In-game photographer (screenshots)</li>
+                <li><strong>Bolszewik</strong> - In-game photographer (screenshots)</li>
+                <li><strong>Mike</strong> - In-game photographer (screenshots)</li>
+            </ul>
+        </div>`
+    ];
+
+    let currentPage = 0;
+
+    function showPage(pageIndex) {
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = pages[pageIndex];
+        const images = contentDiv.getElementsByTagName('img');
+        for (const img of images) {
+            img.addEventListener('click', toggleZoom);
+        }
+        updateArrowVisibility();
+    }
+
+    function updateArrowVisibility() {
+        document.getElementById('left-arrow').classList.toggle('hidden', currentPage === 0);
+        document.getElementById('right-arrow').classList.toggle('hidden', currentPage === pages.length - 1);
+    }
+
+    function nextPage() {
+        if (currentPage < pages.length - 1) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    }
+
+    function toggleZoom(event) {
+        event.target.classList.toggle('zoomed');
+    }
+
+    // Initialize the first page
+    showPage(currentPage);
+</script>
+
+<!-- Footer for copyright -->
+<footer>
+    <p>&copy; 2024 GTA San Andreas Stories - All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
